@@ -1,0 +1,16 @@
+server: 
+    port: 8080
+    servlet.context-path: /
+
+spring: 
+   datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/db_film2
+      username: root
+      password: root
+   jpa: 
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+   thymeleaf:
+       cache: false
