@@ -42,4 +42,39 @@ public class LinkAdminController {
         resultMap.put("total", total);
         return resultMap;
     }
+
+    /**
+     * @return : java.util.Map<java.lang.String,java.lang.Object>
+     * @Description : 添加或者修改友情链接
+     * @Method_Name : save
+     * @Param :  @param link
+     * @Creation Date : 2019/2/6
+     * @Author : Sean
+     */
+    @RequestMapping("/save")
+    public Map<String, Object> save(Link link) throws Exception {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        linkService.save(link);
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * @return : java.util.Map<java.lang.String,java.lang.Object>
+     * @Description : 删除友情链接
+     * @Method_Name : delete
+     * @Param :  @param ids
+     * @Creation Date : 2019/2/6
+     * @Author : Sean
+     */
+    @RequestMapping("/delete")
+    public Map<String, Object> delete(@RequestParam(value = "ids") String ids) throws Exception {
+        String[] idsStr = ids.split(",");
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        for (int i = 0; i < idsStr.length; i++) {
+            linkService.delete(Integer.parseInt(idsStr[i]));
+        }
+        resultMap.put("success", true);
+        return resultMap;
+    }
 }

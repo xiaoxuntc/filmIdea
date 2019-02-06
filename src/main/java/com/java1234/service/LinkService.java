@@ -26,4 +26,24 @@ public interface LinkService {
      * @return
      */
     Long getCount();
+
+    /**
+     * @return : void
+     * @Description : 添加或者修改友情链接
+     * @Method_Name : save
+     * @Param :  @param link
+     * @Creation Date : 2019/2/4
+     * @Author : Sean
+     */
+    void save(Link link);
+
+    /**
+     * @return : void
+     * @Description : 根据id删除友情链接
+     * @Method_Name : delete
+     * @Param :  @param id
+     * @Creation Date : 2019/2/4
+     * @Author : Sean
+     */
+    public void delete(Integer id);
 }
