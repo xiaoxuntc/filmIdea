@@ -13,6 +13,6 @@ public interface FilmService {
 	 * 添加或者修改电影
 	 * @param film
 	 */
-	public void save(Film film);
+	void save(Film film);
 }
 

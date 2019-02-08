@@ -45,5 +45,5 @@ public interface LinkService {
      * @Creation Date : 2019/2/4
      * @Author : Sean
      */
-    public void delete(Integer id);
+    void delete(Integer id);
 }
