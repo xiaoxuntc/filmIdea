@@ -3,6 +3,7 @@ package com.java1234.controller.admin;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.java1234.entity.Film;
@@ -49,6 +50,24 @@ public class FilmAdminController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         filmService.save(film);
         resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * 分页查询电影信息
+     *
+     * @param page
+     * @param rows
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/list")
+    public Map<String, Object> list(Film film, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "rows", required = false) Integer rows) throws Exception {
+        List<Film> filmList = filmService.list(film, page - 1, rows);
+        Long total = filmService.getCount(film);
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("rows", filmList);
+        resultMap.put("total", total);
         return resultMap;
     }
 
