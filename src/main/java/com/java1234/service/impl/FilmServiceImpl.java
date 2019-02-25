@@ -17,8 +17,10 @@ import org.springframework.stereotype.Service;
 import com.java1234.entity.Film;
 import com.java1234.repository.FilmRepository;
 import com.java1234.service.FilmService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 电影Service接口实现类
@@ -70,6 +72,16 @@ public class FilmServiceImpl implements FilmService {
             }
         });
         return count;
+    }
+
+    @Override
+    public Film findById(Integer id) {
+        return filmRepository.findById(id).get();
+    }
+
+    @Override
+    public void delete(Integer id) {
+        filmRepository.deleteById(id);
     }
 
 }

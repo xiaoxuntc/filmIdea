@@ -84,6 +84,36 @@ public class FilmAdminController {
         sb.append("</script>");
 
         return sb.toString();
+    }
 
+    /**
+     * 删除电影信息
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/delete")
+    public Map<String, Object> delete(@RequestParam(value = "ids") String ids) throws Exception {
+        String[] idsStr = ids.split(",");
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        for (int i = 0; i < idsStr.length; i++) {
+            filmService.delete(Integer.parseInt(idsStr[i]));
+        }
+        resultMap.put("success", true);
+        return resultMap;
+    }
+
+    /**
+     * 根据id查找实体
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/findById")
+    public Film findById(Integer id) throws Exception {
+        return filmService.findById(id);
     }
 }
+
