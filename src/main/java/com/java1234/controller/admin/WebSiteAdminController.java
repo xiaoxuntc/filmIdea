@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.java1234.service.WebSiteInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,9 @@ public class WebSiteAdminController {
 
     @Resource
     private WebSiteService webSiteService;
+
+    @Resource
+    private WebSiteInfoService webSiteInfoService;
 
     /**
      * 分页查询收录电影网址
@@ -47,7 +51,7 @@ public class WebSiteAdminController {
     /**
      * 添加或者修改收录电影网址
      *
-     * @param link
+     * @param
      * @return
      * @throws Exception
      */
@@ -70,10 +74,21 @@ public class WebSiteAdminController {
     public Map<String, Object> delete(@RequestParam(value = "ids") String ids) throws Exception {
         String[] idsStr = ids.split(",");
         Map<String, Object> resultMap = new HashMap<String, Object>();
+        boolean flag = true;
         for (int i = 0; i < idsStr.length; i++) {
-            webSiteService.delete(Integer.parseInt(idsStr[i]));
+            Integer webSiteId = Integer.parseInt(idsStr[i]);
+            if (webSiteInfoService.getByWebSiteId(webSiteId).size() > 0) {
+                flag = false;
+            } else {
+                webSiteService.delete(webSiteId);
+            }
         }
-        resultMap.put("success", true);
+        if (flag) {
+            resultMap.put("success", true);
+        } else {
+            resultMap.put("success", false);
+            resultMap.put("errorInfo", "电影动态信息中存在电影网址信息，不能删除！");
+        }
         return resultMap;
     }
 

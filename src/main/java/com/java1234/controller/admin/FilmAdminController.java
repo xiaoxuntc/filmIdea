@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.java1234.entity.Film;
-import com.java1234.service.FilmService;
+import javax.annotation.Resource;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.java1234.entity.Film;
+import com.java1234.service.FilmService;
+import com.java1234.service.WebSiteInfoService;
 import com.java1234.util.DateUtil;
-
-import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/admin/film")
@@ -25,6 +26,9 @@ public class FilmAdminController {
 
     @Resource
     private FilmService filmService;
+
+    @Resource
+    private WebSiteInfoService webSiteInfoService;
 
     @Value("${imageFilePath}")
     private String imageFilePath;
@@ -84,6 +88,7 @@ public class FilmAdminController {
         sb.append("</script>");
 
         return sb.toString();
+
     }
 
     /**
@@ -97,10 +102,21 @@ public class FilmAdminController {
     public Map<String, Object> delete(@RequestParam(value = "ids") String ids) throws Exception {
         String[] idsStr = ids.split(",");
         Map<String, Object> resultMap = new HashMap<String, Object>();
+        boolean flag = true;
         for (int i = 0; i < idsStr.length; i++) {
-            filmService.delete(Integer.parseInt(idsStr[i]));
+            Integer filmId = Integer.parseInt(idsStr[i]);
+            if (webSiteInfoService.getByFilmId(filmId).size() > 0) {
+                flag = false;
+            } else {
+                filmService.delete(filmId);
+            }
         }
-        resultMap.put("success", true);
+        if (flag) {
+            resultMap.put("success", true);
+        } else {
+            resultMap.put("success", false);
+            resultMap.put("errorInfo", "电影动态信息中存在电影信息，不能删除！");
+        }
         return resultMap;
     }
 
@@ -116,4 +132,3 @@ public class FilmAdminController {
         return filmService.findById(id);
     }
 }
-
