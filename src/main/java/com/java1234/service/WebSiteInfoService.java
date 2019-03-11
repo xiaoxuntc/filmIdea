@@ -43,5 +43,17 @@ public interface WebSiteInfoService {
      */
     List<WebSiteInfo> getByWebSiteId(Integer webSiteId);
 
+    /**
+     * 添加或者修改电影动态信息
+     *
+     * @param link
+     */
+    void save(WebSiteInfo webSiteInfo);
 
+    /**
+     * 根据id删除电影动态信息
+     *
+     * @param id
+     */
+    void delete(Integer id);
 }

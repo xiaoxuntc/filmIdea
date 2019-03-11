@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.java1234.util.StringUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -130,5 +131,23 @@ public class FilmAdminController {
     @RequestMapping("/findById")
     public Film findById(Integer id) throws Exception {
         return filmService.findById(id);
+    }
+
+    /**
+     * 下拉框模糊查询用到
+     *
+     * @param q
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/comboList")
+    public List<Film> comboList(String q) throws Exception {
+        if (StringUtil.isEmpty(q)) {
+            return null;
+        }
+        Film film = new Film();
+        film.setName(q);
+        // 最多查询30条记录
+        return filmService.list(film, 0, 30);
     }
 }

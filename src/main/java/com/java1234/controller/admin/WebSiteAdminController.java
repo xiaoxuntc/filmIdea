@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.java1234.service.WebSiteInfoService;
+import com.java1234.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -92,4 +93,20 @@ public class WebSiteAdminController {
         return resultMap;
     }
 
+    /**
+     * 下拉框模糊查询用到
+     *
+     * @param q
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/comboList")
+    public List<WebSite> comboList(String q) throws Exception {
+        if (StringUtil.isEmpty(q)) {
+            return null;
+        }
+        WebSite webSite = new WebSite();
+        webSite.setUrl(q);
+        return webSiteService.list(webSite, 0, 30); // 最多查询30条记录
+    }
 }
