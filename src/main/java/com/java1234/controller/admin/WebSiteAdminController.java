@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.java1234.run.StartupRunner;
 import com.java1234.service.WebSiteInfoService;
 import com.java1234.util.StringUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class WebSiteAdminController {
 
     @Resource
     private WebSiteInfoService webSiteInfoService;
+
+    @Resource
+    private StartupRunner startupRunner;
 
     /**
      * 分页查询收录电影网址
@@ -60,6 +64,7 @@ public class WebSiteAdminController {
     public Map<String, Object> save(WebSite webSite) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         webSiteService.save(webSite);
+        startupRunner.loadData();
         resultMap.put("success", true);
         return resultMap;
     }
@@ -90,6 +95,7 @@ public class WebSiteAdminController {
             resultMap.put("success", false);
             resultMap.put("errorInfo", "电影动态信息中存在电影网址信息，不能删除！");
         }
+        startupRunner.loadData();
         return resultMap;
     }
 

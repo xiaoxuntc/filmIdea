@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.java1234.run.StartupRunner;
 import com.java1234.util.StringUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,9 @@ public class FilmAdminController {
     @Value("${imageFilePath}")
     private String imageFilePath;
 
+    @Resource
+    private StartupRunner startupRunner;
+
     /**
      * 添加或者修改电影信息
      *
@@ -54,6 +58,7 @@ public class FilmAdminController {
         film.setPublishDate(new Date());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         filmService.save(film);
+        startupRunner.loadData();
         resultMap.put("success", true);
         return resultMap;
     }
@@ -118,6 +123,7 @@ public class FilmAdminController {
             resultMap.put("success", false);
             resultMap.put("errorInfo", "电影动态信息中存在电影信息，不能删除！");
         }
+        startupRunner.loadData();
         return resultMap;
     }
 

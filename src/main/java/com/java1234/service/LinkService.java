@@ -20,6 +20,16 @@ public interface LinkService {
      */
     List<Link> list(Integer page, Integer pageSize);
 
+    /***
+    * @Description : 查询所有友情链接
+    * @Method_Name : listAdd
+    * @Param :
+    * @return : java.util.List<com.java1234.entity.Link>
+    * @Creation Date : 2019/3/23
+    * @Author : Sean
+    */
+    List<Link> listAll();
+
     /**
      * 获取总记录数
      *

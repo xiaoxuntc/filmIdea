@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.java1234.run.StartupRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,9 @@ public class LinkAdminController {
 
     @Resource
     private LinkService linkService;
+
+    @Resource
+    private StartupRunner startupRunner;
 
     /**
      * 分页查询友情链接
@@ -55,6 +59,7 @@ public class LinkAdminController {
     public Map<String, Object> save(Link link) throws Exception {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         linkService.save(link);
+        startupRunner.loadData();
         resultMap.put("success", true);
         return resultMap;
     }
@@ -74,6 +79,7 @@ public class LinkAdminController {
         for (int i = 0; i < idsStr.length; i++) {
             linkService.delete(Integer.parseInt(idsStr[i]));
         }
+        startupRunner.loadData();
         resultMap.put("success", true);
         return resultMap;
     }

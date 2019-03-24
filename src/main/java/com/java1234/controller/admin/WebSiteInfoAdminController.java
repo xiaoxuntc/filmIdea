@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.java1234.run.StartupRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,9 @@ public class WebSiteInfoAdminController {
 
     @Resource
     private WebSiteInfoService webSiteInfoService;
+
+    @Resource
+    private StartupRunner startupRunner;
 
     /**
      * 分页查询电影动态信息
@@ -58,6 +62,7 @@ public class WebSiteInfoAdminController {
         for (int i = 0; i < idsStr.length; i++) {
             webSiteInfoService.delete(Integer.parseInt(idsStr[i]));
         }
+        startupRunner.loadData();
         resultMap.put("success", true);
         return resultMap;
     }
@@ -74,6 +79,7 @@ public class WebSiteInfoAdminController {
         webSiteInfo.setPublishDate(new Date());
         Map<String, Object> resultMap = new HashMap<String, Object>();
         webSiteInfoService.save(webSiteInfo);
+        startupRunner.loadData();
         resultMap.put("success", true);
         return resultMap;
     }

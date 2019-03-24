@@ -20,6 +20,17 @@ public interface WebSiteService {
      */
     List<WebSite> list(WebSite webSite, Integer page, Integer pageSize);
 
+    /***
+    * @Description : 获取最新收录网址
+    * @Method_Name : newestList
+    * @Param :  @param page
+    *  @param pageSize
+    * @return : java.util.List<com.java1234.entity.WebSite>
+    * @Creation Date : 2019/3/23
+    * @Author : Sean
+    */
+    List<WebSite> newestList(Integer page, Integer pageSize);
+
     /**
      * @return : java.lang.Long
      * @Description : 获取总记录数
