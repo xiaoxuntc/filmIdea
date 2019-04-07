@@ -55,7 +55,7 @@ public class WebSiteServiceImpl implements WebSiteService {
 
     @Override
     public List<WebSite> newestList(Integer page, Integer pageSize) {
-        Pageable pageable = new PageRequest(page, pageSize, Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.Direction.DESC, "id");
         return webSiteRepository.findAll(pageable).getContent();
     }
 
