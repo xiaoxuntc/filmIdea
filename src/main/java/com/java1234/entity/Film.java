@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * 电影实体
@@ -24,6 +25,7 @@ public class Film {
     @GeneratedValue
     private Integer id; // 编号
 
+    @NotEmpty(message="请输入您要搜索的电影!")
     @Column(length = 200)
     private String name; // 电影名称
 

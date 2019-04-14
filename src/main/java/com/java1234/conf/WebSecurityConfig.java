@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable().headers().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/static/**").permitAll() // 配置不需要身份认证的请求地址
+                .antMatchers("/", "/static/**", "/film/**").permitAll() // 配置不需要身份认证的请求地址
                 .anyRequest().authenticated() // 其他所有访问路径需要身份认证
                 .and()
                 .formLogin()
